@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>websocket chat</title>
+</head>
+<body>
+    <form onsubmit="return false">
+        <textarea name="msg" style="width: 300px;height: 300px"></textarea>
+        <input type="button" value="send" onclick="send(this.form.msg.value)">
+        <textarea id="responseText" style="width: 300px;height: 300px"></textarea>
+        <input type="button" value="clear" onclick="document.getElementById('responseText').value = ''"/>
+    </form>
+</body>
+<script>
+    const socket = new WebSocket("ws://localhost:6670/cinder");
+    const rt = document.getElementById('responseText')
+    if (window.WebSocket){
+        socket.onmessage = function (msg) {
+            rt.value = rt.value + "\n" + msg.data;
+        };
+
+        //开启连接
+        socket.onopen = function () {
+            rt.value = "连接开启！";
+        };
+
+        socket.onclose = function () {
+            rt.value = rt.value + "\n" + "连接关闭！";
+        };
+
+        socket.onerror = function (error) {
+            console.log(error);
+        }
+    }else{
+        alert("不支持websocket！");
+    }
+
+    //发送消息到服务器
+    function send(msg) {
+        if(!socket){
+            return;
+        }
+        if(socket.readyState === WebSocket.OPEN){
+            socket.send(msg);
+        } else{
+            alert("连接未开启");
+        }
+    }
+</script>
+</html>

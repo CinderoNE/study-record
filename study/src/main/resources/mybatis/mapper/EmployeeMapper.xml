@@ -1,0 +1,15 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.com.cinder.mybatis.mapper.EmployeeMapper">
+    <select id="findById">
+        select * from employee where id = #{0}
+    </select>
+
+    <insert id="insertEmployee" parameterType="com.com.cinder.mybatis.bean.Employee">
+        insert into employee values(default,#{lastName},#{email},#{sex},#{department.id})
+    </insert>
+
+
+</mapper>

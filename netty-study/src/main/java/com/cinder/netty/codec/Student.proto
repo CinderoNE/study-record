@@ -1,0 +1,6 @@
+syntax = "proto3"; //版本
+option java_outer_classname = "StudentOuter";//生成的外部类名，也是文件名
+message Student {
+  int32 id = 1;  //类型为int32,1表示属性序号
+  string name = 2;
+}
